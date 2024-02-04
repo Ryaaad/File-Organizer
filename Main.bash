@@ -5,8 +5,6 @@ Rename=false
 # Use inotifywait to monitor create and modify events
 inotifywait -m -e move --format '%f' "$directory_to_monitor" |
 while read -r file_name; do
-    # Print a message for create or modify events
-    echo "File was created or modified: $file_name"
 
     if [ -e "$directory_to_monitor/$file_name" ]; then 
       echo "File was named to $file_name"
@@ -18,18 +16,16 @@ while read -r file_name; do
     fi
 echo "$Rename"
 if [ "$Rename" == true ]; then
- echo "Where Do you want to move it ? "
-      echo " A "
-      echo " B "
-      read path </dev/tty 
-      echo $path
-      if [ "$path" == 'A' ] || [ "$path" == 'a' ]; then
-      mv "/home/ryad/Desktop/$file_name" /home/ryad/Desktop/A
+echo "Choose Directory you want to move the file to :"
+echo "1. Web Projects"
+echo "2. Script Projects"
+read chosen < /dev/tty
+      if [ "$chosen" == "1" ] ; then
+      mv "/home/ryad/Desktop/$file_name" "/home/ryad/Desktop/Web Project" && echo "$file_name has been successfully moved to /home/ryad/Desktop/Web Project."
       fi
-      if [ "$path" == 'B' ] || [ "$path" == 'b' ]; then
-      mv "/home/ryad/Desktop/$file_name" /home/ryad/Desktop/B
+      if [ "$chosen" == "2" ]; then
+      mv "/home/ryad/Desktop/$file_name" "/home/ryad/Desktop/Script Project" && echo "$file_name has been successfully moved to /home/ryad/Desktop/Script Project."
       fi
 Rename=false
-
 fi
 done
